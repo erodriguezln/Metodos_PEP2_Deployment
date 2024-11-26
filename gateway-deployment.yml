@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: gateway-service
 spec:
-  # type: LoadBalancer # Makes it accessible from outside the cluster
+  type: LoadBalancer # Makes it accessible from outside the cluster
   selector:
     app: gateway-service
   ports:

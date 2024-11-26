@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: attendance-service
+  name: calculate-service
 spec:
   selector:
-    app: attendance-service
+    app: calculate-service
   ports:
     - port: 8080
       targetPort: 8080
@@ -12,20 +12,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: attendance-service
+  name: calculate-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: attendance-service
+      app: calculate-service
   template:
     metadata:
       labels:
-        app: attendance-service
+        app: calculate-service
     spec:
       containers:
-        - name: attendance-service
-          image: erodriguezln/er-attendance-service:latest
+        - name: calculate-service
+          image: erodriguezln/er-calculate-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -39,7 +39,7 @@ spec:
             - name: DB_PORT
               value: '3306'
             - name: DB_NAME
-              value: 'attendanceDB'
+              value: 'calculateDB'
             - name: DB_USERNAME
               value: 'root'
             - name: DB_PASSWORD

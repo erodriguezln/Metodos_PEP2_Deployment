@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: showpaycheck-service
+spec:
+  selector:
+    app: showpaycheck-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: showpaycheck-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: showpaycheck-service
+  template:
+    metadata:
+      labels:
+        app: showpaycheck-service
+    spec:
+      containers:
+        - name: showpaycheck-service
+          image: erodriguezln/er-showpaycheck-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_HOST
+              value: 'config-service'
+            - name: CONFIG_SERVER_PORT
+              value: '8081'

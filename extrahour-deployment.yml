@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: extrahour-service
+spec:
+  selector:
+    app: extrahour-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: extrahour-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: extrahour-service
+  template:
+    metadata:
+      labels:
+        app: extrahour-service
+    spec:
+      containers:
+        - name: extrahour-service
+          image: erodriguezln/er-extrahour-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_HOST
+              value: 'config-service'
+            - name: CONFIG_SERVER_PORT
+              value: '8081'
