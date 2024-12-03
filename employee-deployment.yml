@@ -6,8 +6,9 @@ spec:
   selector:
     app: employee-service
   ports:
-    - port: 8080
-      targetPort: 8080
+    # - nodePort: 30500
+    - port: 8080 # entrada "fuera"
+      targetPort: 8080 # trafico sera redireccionado a este puerto para cada app que use employee-service
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,7 +29,7 @@ spec:
           image: erodriguezln/er-employee-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8080 # puerto al que apunta targetPort
           env:
             - name: CONFIG_SERVER_HOST
               value: 'config-service'

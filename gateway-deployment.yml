@@ -7,8 +7,9 @@ spec:
   selector:
     app: gateway-service
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 9000
+      targetPort: 9000
+      nodePort: 30000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -29,4 +30,4 @@ spec:
           image: erodriguezln/er-gateway-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 9000
